@@ -7,7 +7,6 @@ from torch.utils.data import Dataset
 from transformers import DebertaV2Tokenizer
 
 class SimpleWSDDataset(Dataset):
-    """最简单的WSD数据集"""
     
     def __init__(self, json_path, tokenizer, max_length=512):
         self.tokenizer = tokenizer
@@ -47,14 +46,6 @@ class SimpleWSDDataset(Dataset):
     def __getitem__(self, idx):
         sample = self.samples[idx]
         
-        # 最简单的输入格式：定义 + 例句 + 待判断文本
-        # text = (
-        #     f"homonym：{sample['homonym']} [SEP] "
-        #     f"Definition:{sample['definition']} [SEP] "
-        #     f"Example:{sample['example']} [SEP] "
-        #     f"Context:{sample['context']}"
-        # )
-        
         text_parts = (
             f"homonym：{sample['homonym']}"
             f"Definition:{sample['definition']}"
@@ -89,21 +80,3 @@ class SimpleWSDDataset(Dataset):
              del encoding["token_type_ids"]
              
         return encoding
-
-# 使用示例
-if __name__ == "__main__":
-    # 初始化tokenizer
-    tokenizer = DebertaV2Tokenizer.from_pretrained("../deberta-v3-large")
-    
-    # 创建数据集
-    dataset = SimpleWSDDataset("../data/train.json", tokenizer)
-    
-    # 查看第一个样本
-    sample = dataset[0]
-    print(f"输入shape: {sample['input_ids'].shape}")
-    print(f"标签: {sample['labels'].item()}")
-    
-    # 解码看看
-    text = tokenizer.decode(sample['input_ids'], skip_special_tokens=False)
-    print("\n输入文本:")
-    print(text[:500])
