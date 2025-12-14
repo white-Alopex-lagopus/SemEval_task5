@@ -26,7 +26,7 @@ print(f"Using JSON file: {DEV_JSON_PATH}")
 # 1. 实例化推理数据集和 DataLoader
 # ----------------------------------------------------------------------
 # 实例化 SimpleWSDDataset，传入 is_training=False 禁用标签加载
-dev_dataset = SimpleWSDDataset(
+dev_dataset = MSEDataset(
     json_path=DEV_JSON_PATH, 
     tokenizer=tokenizer, 
     is_training=False

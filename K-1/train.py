@@ -38,7 +38,7 @@ if __name__ == "__main__":
     training_args = TrainingArguments(
         output_dir=OUTPUT_DIR,
         num_train_epochs=3,                       # 增加 epochs
-        per_device_train_batch_size=2,
+        per_device_train_batch_size=4,
         gradient_accumulation_steps=4,
         
         save_strategy="no",                    # no
